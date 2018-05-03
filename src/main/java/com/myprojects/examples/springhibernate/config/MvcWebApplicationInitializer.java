@@ -2,16 +2,18 @@ package com.myprojects.examples.springhibernate.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class MvcWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
+    // Load database and spring security configuration
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] { HibernateConfig.class };
+        return new Class[] { AppConfig.class, WebSecurityConfig.class };
     }
 
+    // Load spring web configuration
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] { WebMvcConfig.class };
+        return new Class[] { WebConfig.class };
     }
 
     @Override

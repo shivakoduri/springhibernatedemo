@@ -1,44 +1,18 @@
 package com.myprojects.examples.springhibernate.controller;
 
-import com.myprojects.examples.springhibernate.model.User;
-import com.myprojects.examples.springhibernate.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import java.security.Principal;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import javax.validation.Valid;
-import java.util.Locale;
 
 @Controller
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-
     @GetMapping("/")
-    public String userForm(Locale locale, Model model) {
-        model.addAttribute("users", userService.list());
-        return "editUsers";
-    }
-
-    @ModelAttribute("user")
-    public User formBackingObject() {
-        return new User();
-    }
-
-    @PostMapping("/addUser")
-    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult result, Model model) {
-
-        if (result.hasErrors()) {
-            model.addAttribute("users", userService.list());
-            return "editUsers";
-        }
-
-        userService.save(user);
-        return "redirect:/";
+    public String index(Model model, Principal principal) {
+        model.addAttribute("message", "You are logged in as " + principal.getName());
+        return "index";
     }
 }
